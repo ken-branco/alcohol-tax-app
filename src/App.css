@@ -1,0 +1,60 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.alcohol-type-container {
+  display: flex; /* Align images in a horizontal row */
+  justify-content: space-between; /* Space out the images evenly */
+  gap: 20px; /* Add space between the images */
+  overflow-x: auto; /* Allows horizontal scrolling if images don't fit */
+}
+
+.alcohol-type {
+  cursor: pointer; /* Change cursor to pointer when hovering over images */
+  text-align: center; /* Center the text (alcohol type) below each image */
+}
+
+.alcohol-type img {
+  width: 120px; /* Adjust the width of each image */
+  height: 120px; /* Maintain the height for consistency */
+  object-fit: cover; /* Ensures the image doesn't get distorted */
+}
+
+.alcohol-type p {
+  margin-top: 5px; /* Adds space between image and text */
+}
