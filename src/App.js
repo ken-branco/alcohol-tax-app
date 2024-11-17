@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
+
+import twelveOunceImage from './images/12_ounce.jpg'
+import onePintImage from './images/pint_glass.jpg'
+import sixpackImage from './images/six_pack.jpg'
+import twelvePackImage from './images/12_pack.jpg'
+import caseImage from './images/case_beer.jpg'
+import twofiftyImage from './images/250ml_bottle.jpg'
+import sevenfiftyImage from './images/750ml_bottle.jpg'
+import oneLiterImage from './images/1l_bottle.jpg'
+import oneSevenFiveImage from './images/1_75l_bottle.jpg'
+
 import beerImage from './images/beer.jpg'
 import wineImage from './images/wine.jpg'
 import maltImage from './images/malt.jpg'
@@ -28,15 +39,15 @@ function App() {
   ];
 
   const liquidMeasurements = [
-    '12 ounces',
-    '1 pint',
-    '72 ounces',
-    '144 ounces',
-    '288 ounces',
-    '250 ml',
-    '750 ml',
-    '1 liter',
-    '1.75 liter'
+    { name: 'twelve', label: '12 ounce can/bottle', image: twelveOunceImage },
+    { name: 'pint', label: 'Pint (16 ounces)', image: onePintImage },
+    { name: 'six_pack', label: '6 Pack', image: sixpackImage },
+    { name: 'twelve_pack', label: '12 Pack', image: twelvePackImage },
+    { name: 'case', label: 'Case', image: caseImage },
+    { name: '250ml', label: '250 ml', image: twofiftyImage },
+    { name: '750ml', label: '750 ml', image: sevenfiftyImage },
+    { name: '1l', label: '1 Liter', image: oneLiterImage },
+    { name: '1_75l', label: '1.75 Liter', image: oneSevenFiveImage },
   ];
 
   const handleStateSelection = (stateCode) => {
@@ -78,9 +89,8 @@ function App() {
           {alcoholTypes.map((type, index) => (
             <div
               key={index}
-              className="alcohol-type"
-              onClick={() => setAlcoholType(type.name)}
-            >
+              className={`alcohol-type ${alcoholType === type.name ? 'selected' : ''}`}
+              onClick={() => setAlcoholType(type.name)}>
               <img src={type.image} alt={type.name} className="alcohol-type-image" />
               <p>{type.name}</p>
             </div>
@@ -102,17 +112,25 @@ function App() {
           </div>
         )}
 
-        <div>
-          <label>Liquid Measurement:</label>
-          <select value={liquidMeasurement} onChange={(e) => setLiquidMeasurement(e.target.value)} required>
-            <option value="">Select Liquid Measurement</option>
-            {liquidMeasurements.map((measurement, index) => (
-              <option key={index} value={measurement}>
-                {measurement}
-              </option>
-            ))}
-          </select>
+<div>
+        <label>Select Liquid Measurement:</label>
+        <div className="liquid-measurement-container">
+          {liquidMeasurements.map((measurement, index) => (
+            <div
+              key={index}
+              className={`liquid-measurement ${liquidMeasurement === measurement.name ? 'selected' : ''}`}
+              onClick={() => setLiquidMeasurement(measurement.name)}
+            >
+              <img
+               src={measurement.image}  // Image for each liquid measurement
+                alt={measurement.name}
+                className="liquid-measurement-image"
+              />
+              <p>{measurement.label}</p>
+            </div>
+          ))}
         </div>
+      </div>
 
         <button type="submit" disabled={!state}>Calculate Tax</button>
         </form>

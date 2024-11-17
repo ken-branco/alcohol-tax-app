@@ -13,15 +13,15 @@ const taxRates = {
   };
   
   const measurementFactors = {
-    '12 ounces': 12 / 128, // Convert ounces to gallons
-    '1 pint': 16 / 128, // Convert pints to gallons
-    '72 ounces': 72 / 128, // Convert ounces to gallons
-    '144 ounces': 144 / 128, // Convert ounces to gallons
-    '288 ounces': 288 / 128, // Convert ounces to gallons
-    '250 ml': 250 / 1000 / 3.78541, // Convert ml to gallons
-    '750 ml': 750 / 1000 / 3.78541, // Convert ml to gallons
-    '1 liter': 1 / 3.78541, // Convert liters to gallons
-    '1.75 liter': 1.75 / 3.78541 // Convert liters to gallons
+    'twelve': 12 / 128, // Convert ounces to gallons
+    'pint': 16 / 128, // Convert pints to gallons
+    'six_pack': 72 / 128, // Convert ounces to gallons
+    'twelve_pack': 144 / 128, // Convert ounces to gallons
+    'case': 288 / 128, // Convert ounces to gallons
+    '250ml': 250 / 1000 / 3.78541, // Convert ml to gallons
+    '750ml': 750 / 1000 / 3.78541, // Convert ml to gallons
+    '1l': 1 / 3.78541, // Convert liters to gallons
+    '1_75l': 1.75 / 3.78541 // Convert liters to gallons
   };
   
   // Function to calculate tax

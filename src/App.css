@@ -38,23 +38,67 @@
 }
 
 .alcohol-type-container {
-  display: flex; /* Align images in a horizontal row */
-  justify-content: space-between; /* Space out the images evenly */
-  gap: 20px; /* Add space between the images */
-  overflow-x: auto; /* Allows horizontal scrolling if images don't fit */
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  overflow-x: auto;
 }
 
 .alcohol-type {
-  cursor: pointer; /* Change cursor to pointer when hovering over images */
-  text-align: center; /* Center the text (alcohol type) below each image */
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover and selection */
 }
 
 .alcohol-type img {
   width: 120px; /* Adjust the width of each image */
   height: 120px; /* Maintain the height for consistency */
-  object-fit: cover; /* Ensures the image doesn't get distorted */
+  object-fit: cover;
 }
 
 .alcohol-type p {
-  margin-top: 5px; /* Adds space between image and text */
+  margin-top: 5px;
+}
+
+.alcohol-type.selected {
+  transform: scale(1.1); /* Slightly enlarge the selected image */
+  border: 3px solid #007bff; /* Add a border around the selected item */
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5); /* Add a glowing box-shadow effect */
+}
+
+.alcohol-type.selected p {
+  color: #007bff; /* Change text color of selected type */
+}
+
+.liquid-measurement-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  overflow-x: auto;
+}
+
+.liquid-measurement {
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.liquid-measurement img {
+  width: 120px; /* Adjust the width of each image */
+  height: 120px; /* Maintain the height for consistency */
+  object-fit: cover;
+}
+
+.liquid-measurement p {
+  margin-top: 5px;
+}
+
+.liquid-measurement.selected {
+  transform: scale(1.1); /* Slightly enlarge the selected image */
+  border: 3px solid #007bff; /* Add a border around the selected item */
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5); /* Add a glowing box-shadow effect */
+}
+
+.liquid-measurement.selected p {
+  color: #007bff; /* Change text color of selected measurement */
 }
