@@ -1,104 +1,79 @@
+/* General layout and mobile-friendly styling */
 .App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+label {
+  font-weight: bold;
+  margin-top: 20px;
+  display: block;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.widget-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin-bottom: 20px;
+}
+
+.widget {
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  padding: 20px;
+  cursor: pointer;
+  width: 80px;
+  text-align: center;
+  border-radius: 8px;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.widget p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.widget.selected {
+  background-color: #007bff;
   color: white;
+  border-color: #007bff;
+  transform: scale(1.1); /* Slightly enlarge the selected widget */
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.alcohol-type-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  overflow-x: auto;
-}
-
-.alcohol-type {
+/* Button for form submission */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover and selection */
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 20px;
 }
 
-.alcohol-type img {
-  width: 120px; /* Adjust the width of each image */
-  height: 120px; /* Maintain the height for consistency */
-  object-fit: cover;
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
-.alcohol-type p {
-  margin-top: 5px;
-}
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .widget-container {
+    flex-direction: column; /* Stack widgets vertically on small screens */
+  }
 
-.alcohol-type.selected {
-  transform: scale(1.1); /* Slightly enlarge the selected image */
-  border: 3px solid #007bff; /* Add a border around the selected item */
-  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5); /* Add a glowing box-shadow effect */
-}
-
-.alcohol-type.selected p {
-  color: #007bff; /* Change text color of selected type */
-}
-
-.liquid-measurement-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  overflow-x: auto;
-}
-
-.liquid-measurement {
-  cursor: pointer;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.liquid-measurement img {
-  width: 120px; /* Adjust the width of each image */
-  height: 120px; /* Maintain the height for consistency */
-  object-fit: cover;
-}
-
-.liquid-measurement p {
-  margin-top: 5px;
-}
-
-.liquid-measurement.selected {
-  transform: scale(1.1); /* Slightly enlarge the selected image */
-  border: 3px solid #007bff; /* Add a border around the selected item */
-  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5); /* Add a glowing box-shadow effect */
-}
-
-.liquid-measurement.selected p {
-  color: #007bff; /* Change text color of selected measurement */
+  .widget {
+    width: 100%; /* Make each widget take full width on mobile */
+  }
 }

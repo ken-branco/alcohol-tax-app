@@ -1,70 +1,36 @@
 import React, { useState } from 'react';
-import './App.css';
+import './App.css'; // Assuming the CSS file is imported
+import { calculateTax } from './taxCalculator'; // Import the calculateTax function
 
-import twelveOunceImage from './images/12_ounce.jpg'
-import onePintImage from './images/pint_glass.jpg'
-import sixpackImage from './images/six_pack.jpg'
-import twelvePackImage from './images/12_pack.jpg'
-import caseImage from './images/case_beer.jpg'
-import twofiftyImage from './images/250ml_bottle.jpg'
-import sevenfiftyImage from './images/750ml_bottle.jpg'
-import oneLiterImage from './images/1l_bottle.jpg'
-import oneSevenFiveImage from './images/1_75l_bottle.jpg'
-
-import beerImage from './images/beer.jpg'
-import wineImage from './images/wine.jpg'
-import maltImage from './images/malt.jpg'
-import sparklingImage from './images/sparkling.jpg'
-import spiritsImage from './images/spirits.jpg'
-import ciderImage from './images/cider.jpg'
-import newEnglandImage from './images/new-england.jpg';
-
-import { calculateTax } from './taxCalculator'; // Import the tax calculation logic
-
-function App() {
-  const [state, setState] = useState('');
+const AlcoholTaxCalculator = () => {
   const [alcoholType, setAlcoholType] = useState('');
   const [liquidMeasurement, setLiquidMeasurement] = useState('');
   const [proof, setProof] = useState('');
   const [taxPaid, setTaxPaid] = useState(null);
   const [error, setError] = useState('');
 
-  const alcoholTypes = [
-    { name: 'Spirits', image: spiritsImage },
-    { name: 'Beer', image: beerImage },
-    { name: 'Wine', image: wineImage },
-    { name: 'Sparkling', image: sparklingImage },
-    { name: 'Malt', image: maltImage },
-    { name: 'Cider', image: ciderImage },
-  ];
+  // Available options
+  const alcoholTypes = ['Malt', 'Wine', 'Sparkling', 'Beer', 'Spirits', 'Cider'];
+  const allLiquidMeasurements = ['12 Ounces', 'Pint', '6-Pack', '12-Pack', 'Case', '250ml', '750ml', '1L', '1.75L'];
+  const specificLiquidMeasurements = ['250ml', '750ml', '1L', '1.75L']; // Specific measurements for certain alcohol types
+  const proofOptions = [80, 90, 100, 120];
 
-  const liquidMeasurements = [
-    { name: 'twelve', label: '12 ounce can/bottle', image: twelveOunceImage },
-    { name: 'pint', label: 'Pint (16 ounces)', image: onePintImage },
-    { name: 'six_pack', label: '6 Pack', image: sixpackImage },
-    { name: 'twelve_pack', label: '12 Pack', image: twelvePackImage },
-    { name: 'case', label: 'Case', image: caseImage },
-    { name: '250ml', label: '250 ml', image: twofiftyImage },
-    { name: '750ml', label: '750 ml', image: sevenfiftyImage },
-    { name: '1l', label: '1 Liter', image: oneLiterImage },
-    { name: '1_75l', label: '1.75 Liter', image: oneSevenFiveImage },
-  ];
-
-  const handleStateSelection = (stateCode) => {
-    setState(stateCode);
-    setError('');
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError('');
-    setTaxPaid(null);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!alcoholType || !liquidMeasurement) {
+      setError('Please select alcohol type, liquid measurement, and proof (if applicable).');
+      return;
+    }
 
     try {
-      const tax = calculateTax(state, alcoholType, liquidMeasurement, alcoholType === 'Spirits' ? proof : null);
-      setTaxPaid(tax);
+      // Use the imported tax calculator logic
+      const calculatedTax = calculateTax('MA', alcoholType, liquidMeasurement, proof);
+      setTaxPaid(calculatedTax); // Set the calculated tax
+
+      setError(''); // Clear error if valid
     } catch (err) {
-      setError(err.message);
+      setError(err.message); // Handle any errors from tax calculation
+      setTaxPaid(null);
     }
   };
 
@@ -72,68 +38,74 @@ function App() {
     <div className="App">
       <h1>Alcohol Tax Calculator</h1>
 
-      <div className="map-container">
-        <img src={newEnglandImage} alt="New England Map" useMap="#nemap"/>
-        <map name="nemap">
-          <area shape="poly" coords="21,389,8,441,195,445,187,377" alt="Massachusetts-1" onClick={() => handleStateSelection('MA')} />
-          <area shape="poly" coords="140,443,225,441,243,479,162,485" alt="Massachusetts-2" onClick={() => handleStateSelection('MA')} />
-        </map>
-      </div>
+      <p>State: Massachusetts</p>
 
-      <p>Selected State: {state || 'None'}</p>
-
-      <form onSubmit={handleSubmit}>
       <div>
         <label>Select Alcohol Type:</label>
-        <div className="alcohol-type-container">
+        <div className="widget-container">
           {alcoholTypes.map((type, index) => (
             <div
               key={index}
-              className={`alcohol-type ${alcoholType === type.name ? 'selected' : ''}`}
-              onClick={() => setAlcoholType(type.name)}>
-              <img src={type.image} alt={type.name} className="alcohol-type-image" />
-              <p>{type.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-        {alcoholType === 'Spirits' && (
-          <div>
-            <label>Proof (32-200):</label>
-            <input
-              type="number"
-              value={proof}
-              onChange={(e) => setProof(e.target.value)}
-              min="32"
-              max="200"
-              required
-            />
-          </div>
-        )}
-
-<div>
-        <label>Select Liquid Measurement:</label>
-        <div className="liquid-measurement-container">
-          {liquidMeasurements.map((measurement, index) => (
-            <div
-              key={index}
-              className={`liquid-measurement ${liquidMeasurement === measurement.name ? 'selected' : ''}`}
-              onClick={() => setLiquidMeasurement(measurement.name)}
+              className={`widget ${alcoholType === type ? 'selected' : ''}`}
+              onClick={() => setAlcoholType(type)}
             >
-              <img
-               src={measurement.image}  // Image for each liquid measurement
-                alt={measurement.name}
-                className="liquid-measurement-image"
-              />
-              <p>{measurement.label}</p>
+              <p>{type}</p>
             </div>
           ))}
         </div>
       </div>
 
-        <button type="submit" disabled={!state}>Calculate Tax</button>
-        </form>
+      <div>
+        <label>Select Liquid Measurement:</label>
+        <div className="widget-container">
+          {/* Render liquid measurements based on the selected alcohol type */}
+          { (alcoholType === 'Spirits' || alcoholType === 'Wine' || alcoholType === 'Sparkling') ?
+            specificLiquidMeasurements.map((measurement, index) => (
+              <div
+                key={index}
+                className={`widget ${liquidMeasurement === measurement ? 'selected' : ''}`}
+                onClick={() => setLiquidMeasurement(measurement)}
+              >
+                <p>{measurement}</p>
+              </div>
+            ))
+            :
+            allLiquidMeasurements.filter(measurement => !specificLiquidMeasurements.includes(measurement))
+            .map((measurement, index) => (
+              <div
+                key={index}
+                className={`widget ${liquidMeasurement === measurement ? 'selected' : ''}`}
+                onClick={() => setLiquidMeasurement(measurement)}
+              >
+                <p>{measurement}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      {alcoholType === 'Spirits' && (
+        <div>
+          <label>Select Proof:</label>
+          <div className="widget-container">
+            {proofOptions.map((option, index) => (
+              <div
+                key={index}
+                className={`widget ${proof === option ? 'selected' : ''}`}
+                onClick={() => setProof(option)}
+              >
+                <p>{option}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <button type="submit" disabled={!alcoholType || !liquidMeasurement || (alcoholType === 'Spirits' && !proof)}>
+          Calculate Tax
+        </button>
+      </form>
 
       {taxPaid !== null && (
         <div>
@@ -144,6 +116,6 @@ function App() {
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
-}
+};
 
-export default App;
+export default AlcoholTaxCalculator;
