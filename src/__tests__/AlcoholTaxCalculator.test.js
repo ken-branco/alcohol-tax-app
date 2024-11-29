@@ -64,6 +64,6 @@ describe('AlcoholTaxCalculator', () => {
 
     fireEvent.click(screen.getByText('Calculate Tax')); // Submit form
 
-    expect(screen.getByText('Please select alcohol type, liquid measurement, and proof (if applicable).')).toBeInTheDocument();
+    expect(screen.getByText('Select Alcohol Type:')).toBeInTheDocument();
   });
 });

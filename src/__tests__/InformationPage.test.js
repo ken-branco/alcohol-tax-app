@@ -9,7 +9,7 @@ describe('InformationPage', () => {
     render(<InformationPage />);
 
     expect(screen.getByText('About This App')).toBeInTheDocument();
-    expect(screen.getByText('This app calculates the alcohol tax based on your input')).toBeInTheDocument();
+    expect(screen.getByText('This app calculates the alcohol tax based on your input for the alcohol type, liquid measurement, and proof (if applicable). It is specifically designed for Massachusetts.')).toBeInTheDocument();
     expect(screen.getByText('If you have any questions, please refer to the help section or contact support.')).toBeInTheDocument();
   });
 });
