@@ -45,10 +45,7 @@ export const calculateTax = (state, alcoholType, liquidMeasurement, proof = null
 
   // Special logic for Spirits with a Proof value
   if (alcoholType === 'Spirits') {
-    if (proof === null || proof <= 31 || proof >= 201) {
-      throw new Error('Proof value must be provided and must be between 31 and 201');
-    }
-
+    
     if (proof > 100) {
       // Calculate using Proof Gallons method
       const proofGallonValue = proof / 100;
