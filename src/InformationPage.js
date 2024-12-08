@@ -26,7 +26,7 @@ const InformationPage = () => (
       <h3 className="section-title">Interesting Insights</h3>
       <p className="section-content">
         Since the alcohol tax is levied by volume, and does not take into account the value of the alcohol, there are surprising results when you compare
-        the pass-through tax paid at the Point of Sale for a a $100 750ml bottle of Wine versus a case of Budwesier (24 12-ounce cans). <br></br><br></br>
+        the pass-through tax paid at the Point of Sale for a $100 750ml bottle of Wine versus a case of Budwesier (24 12-ounce cans). <br></br><br></br>
         Taxes Paid on:
         <br></br>$100 750ml bottle of Wine: <span className="highlight">$0.11</span>
         <br></br>Case of Budwesier: <span className="highlight">$2.48</span>
@@ -55,7 +55,7 @@ const InformationPage = () => (
     <section className="info-section">
       <h3 className="section-title">References</h3>
       <p className="section-content">
-        The information used for the tax calculation comes from the Massachusetts Department of Revenue's guidelines on alcohol tax rates. The official documentation provides detailed tax rates and measurement conversion factors used for calculating alcohol excise tax in the state of Massachusetts.
+        The information used for the tax calculation comes from the Massachusetts Department of Revenue's guidelines on alcohol tax rates.
       </p>
       <a className="section-link" href="https://www.mass.gov/info-details/dor-alcoholic-beverage-excise-tax" target="_blank" rel="noopener noreferrer">
         Read more about the tax guidelines.
