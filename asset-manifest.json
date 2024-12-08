@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/alcohol-tax-app/static/css/main.14bee9dc.css",
-    "main.js": "/alcohol-tax-app/static/js/main.dbba7d58.js",
+    "main.js": "/alcohol-tax-app/static/js/main.8d8dad48.js",
     "index.html": "/alcohol-tax-app/index.html",
     "main.14bee9dc.css.map": "/alcohol-tax-app/static/css/main.14bee9dc.css.map",
-    "main.dbba7d58.js.map": "/alcohol-tax-app/static/js/main.dbba7d58.js.map"
+    "main.8d8dad48.js.map": "/alcohol-tax-app/static/js/main.8d8dad48.js.map"
   },
   "entrypoints": [
     "static/css/main.14bee9dc.css",
-    "static/js/main.dbba7d58.js"
+    "static/js/main.8d8dad48.js"
   ]
 }
