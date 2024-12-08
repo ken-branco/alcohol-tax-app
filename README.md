@@ -1,4 +1,8 @@
-# Alcohol Tax Calculator
+# Massachusetts Alcohol Tax Calculator
+
+This app was created using the [Create React App](https://create-react-app.dev/) tool.  
+Most of the code was written by ChatGPT and then modified by a human, me!
+
 
 A **simple and intuitive web app** designed to calculate alcohol excise tax based on various factors, including the type of alcohol, liquid measurement, and proof (for spirits). Whether you're a small business, a consumer, or just curious about alcohol taxes, this app helps you quickly compute tax rates for Massachusetts.
 

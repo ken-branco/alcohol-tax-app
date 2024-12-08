@@ -4,9 +4,11 @@ import './App.css'; // Assuming the CSS file is imported
 import AlcoholTaxCalculator from './AlcoholTaxCalculator';
 import InformationPage from './InformationPage';
 import PageToggle from './PageToggle';
+import FeedbackPage from './FeedbackPage'; 
 
 const App = () => {
-  const [showCalculator, setShowCalculator] = useState(true);
+  // const [showCalculator, setShowCalculator] = useState(true);
+  const [showPage, setShowPage] = useState('calculator');  // Track which page to show
 
   // Available options
   const alcoholTypes = ['Malt', 'Wine', 'Sparkling', 'Beer', 'Spirits', 'Cider'];
@@ -16,17 +18,23 @@ const App = () => {
 
   return (
     <div className="App">
-      <PageToggle setShowCalculator={setShowCalculator} />
+      {/* <PageToggle setShowCalculator={setShowCalculator} /> */}
+      <PageToggle setShowPage={setShowPage} />
       
-      {showCalculator ? 
+      {/* {showCalculator ?  */}
+      {showPage === 'calculator' && 
         <AlcoholTaxCalculator 
           alcoholTypes={alcoholTypes} 
           allLiquidMeasurements={allLiquidMeasurements}
           specificLiquidMeasurements={specificLiquidMeasurements} 
           proofOptions={proofOptions} 
         />
-        : <InformationPage />
       }
+        {/* : <InformationPage /> */}
+      {showPage === 'information' && <InformationPage />}
+      
+      {showPage === 'feedback' && <FeedbackPage />}  {/* Show feedback page when selected */}
+      
     </div>
   );
 };
