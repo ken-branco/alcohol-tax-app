@@ -1,0 +1,87 @@
+/* InformationPage.css */
+
+.info-page {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+  
+  .info-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+  
+  .section-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .calculation-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .calculation-list li {
+    margin-bottom: 8px;
+    font-size: 1rem;
+  }
+  
+  .section-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .section-link:hover {
+    text-decoration: underline;
+  }
+
+  .highlight {
+    color: #FF0000; /* Change this to your desired color */
+    font-weight: bold; /* Optional: Makes the text bold */
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    .info-page {
+      padding: 15px;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    .section-title {
+      font-size: 1.2rem;
+    }
+  
+    .section-content {
+      font-size: 0.9rem;
+    }
+  
+    .calculation-list li {
+      font-size: 0.9rem;
+    }
+  }
+  

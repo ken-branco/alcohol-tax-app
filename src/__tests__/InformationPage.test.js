@@ -8,8 +8,7 @@ describe('InformationPage', () => {
   test('renders information page correctly', () => {
     render(<InformationPage />);
 
-    expect(screen.getByText('About This App')).toBeInTheDocument();
-    expect(screen.getByText('This app calculates the alcohol tax based on your input for the alcohol type, liquid measurement, and proof (if applicable). It is specifically designed for Massachusetts.')).toBeInTheDocument();
-    expect(screen.getByText('If you have any questions, please refer to the help section or contact support.')).toBeInTheDocument();
+    expect(screen.getByText('About the Alcohol Tax Calculator')).toBeInTheDocument();
+    expect(screen.getByText('The tax rate is multiplied by the appropriate conversion factor based on the volume and type of alcohol. For spirits, an additional proof factor is considered, where higher proof alcohol results in a higher tax rate.')).toBeInTheDocument();
   });
 });
