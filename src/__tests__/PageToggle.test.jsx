@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { vi } from 'vitest';
 import PageToggle from '../PageToggle';
 import AlcoholTaxCalculator from '../AlcoholTaxCalculator';
 import InformationPage from '../InformationPage';
@@ -9,7 +10,7 @@ import FeedbackPage from '../FeedbackPage'; // Import FeedbackPage
 
 describe('PageToggle', () => {
   test('renders and toggles between pages', () => {
-    const setShowPage = jest.fn();
+    const setShowPage = vi.fn();
 
     render(<PageToggle setShowPage={setShowPage} />);
 
@@ -53,4 +54,3 @@ describe('PageToggle', () => {
     expect(screen.getByText('About the Alcohol Tax Calculator')).toBeInTheDocument();
   });
 });
-

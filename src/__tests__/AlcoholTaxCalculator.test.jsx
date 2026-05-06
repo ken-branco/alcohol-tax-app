@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { vi } from 'vitest';
 import AlcoholTaxCalculator from '../AlcoholTaxCalculator';
 import { calculateTax } from '../taxCalculator';
 
 // Mock the calculateTax function
-jest.mock('../taxCalculator', () => ({
-  calculateTax: jest.fn(),
+vi.mock('../taxCalculator', () => ({
+  calculateTax: vi.fn(),
 }));
 describe('AlcoholTaxCalculator - Button State', () => {
   const alcoholTypes = ['Malt', 'Wine', 'Beer', 'Spirits'];
