@@ -1,9 +1,9 @@
-import { act } from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 
-test('renders learn react link', () => {
+test('renders the calculator by default', () => {
   render(<App />);
-  const linkElement = screen.getByText('Pint');
-  expect(linkElement).toBeInTheDocument();
+
+  expect(screen.getByRole('button', { name: 'Calculator' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getByText('Pint')).toBeInTheDocument();
 });

@@ -3,9 +3,8 @@
 .info-page {
     font-family: 'Arial', sans-serif;
     padding: 20px;
-    max-width: 900px;
+    width: 100%;
     margin: 0 auto;
-    background-color: #f9f9f9;
     color: #333;
   }
   
@@ -18,15 +17,16 @@
   
   .info-section {
     background-color: #ffffff;
+    border: 1px solid #d8e2df;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 24px rgba(31, 42, 46, 0.07);
   }
   
   .section-title {
     font-size: 1.5rem;
-    color: #007bff;
+    color: #0e5a6f;
     margin-bottom: 10px;
   }
   
@@ -48,7 +48,7 @@
   }
   
   .section-link {
-    color: #007bff;
+    color: #0e5a6f;
     text-decoration: none;
     font-size: 1rem;
   }
@@ -58,8 +58,8 @@
   }
 
   .highlight {
-    color: #FF0000; /* Change this to your desired color */
-    font-weight: bold; /* Optional: Makes the text bold */
+    color: #b42318;
+    font-weight: bold;
   }
   
   /* Mobile responsiveness */

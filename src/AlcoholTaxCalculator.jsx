@@ -1,6 +1,7 @@
-// AlcoholTaxCalculator.js
 import React, { useState } from 'react';
-import { calculateTax } from './taxCalculator'; // Import the tax calculation logic
+import { calculateTax } from './taxCalculator';
+
+const bottleOnlyTypes = ['Spirits', 'Wine', 'Sparkling'];
 
 const AlcoholTaxCalculator = ({ alcoholTypes, allLiquidMeasurements, specificLiquidMeasurements, proofOptions }) => {
   const [alcoholType, setAlcoholType] = useState('');
@@ -9,9 +10,35 @@ const AlcoholTaxCalculator = ({ alcoholTypes, allLiquidMeasurements, specificLiq
   const [taxPaid, setTaxPaid] = useState(null);
   const [error, setError] = useState('');
 
+  const availableMeasurements = bottleOnlyTypes.includes(alcoholType)
+    ? specificLiquidMeasurements
+    : allLiquidMeasurements.filter((measurement) => !specificLiquidMeasurements.includes(measurement));
+
+  const clearOutcome = () => {
+    setTaxPaid(null);
+    setError('');
+  };
+
+  const handleAlcoholTypeChange = (type) => {
+    setAlcoholType(type);
+    setLiquidMeasurement('');
+    setProof('');
+    clearOutcome();
+  };
+
+  const handleMeasurementChange = (measurement) => {
+    setLiquidMeasurement(measurement);
+    clearOutcome();
+  };
+
+  const handleProofChange = (option) => {
+    setProof(option);
+    clearOutcome();
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!alcoholType || !liquidMeasurement) {
+    if (!alcoholType || !liquidMeasurement || (alcoholType === 'Spirits' && !proof)) {
       setError('Please select alcohol type, liquid measurement, and proof (if applicable).');
       return;
     }
@@ -27,84 +54,86 @@ const AlcoholTaxCalculator = ({ alcoholTypes, allLiquidMeasurements, specificLiq
   };
 
   return (
-    <div className="App">
-      <h1>Alcohol Tax Calculator</h1>
-      <p>State: Massachusetts</p>
-
-      <div>
-        <label>Select Alcohol Type:</label>
-        <div className="widget-container">
-          {alcoholTypes.map((type, index) => (
-            <div
-              key={index}
-              className={`widget ${alcoholType === type ? 'selected' : ''}`}
-              onClick={() => setAlcoholType(type)}
-            >
-              <p>{type}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <label>Select Liquid Measurement:</label>
-        <div className="widget-container">
-          {(alcoholType === 'Spirits' || alcoholType === 'Wine' || alcoholType === 'Sparkling') ?
-            specificLiquidMeasurements.map((measurement, index) => (
-              <div
-                key={index}
-                className={`widget ${liquidMeasurement === measurement ? 'selected' : ''}`}
-                onClick={() => setLiquidMeasurement(measurement)}
-              >
-                <p>{measurement}</p>
-              </div>
-            ))
-            :
-            allLiquidMeasurements.filter(measurement => !specificLiquidMeasurements.includes(measurement))
-            .map((measurement, index) => (
-              <div
-                key={index}
-                className={`widget ${liquidMeasurement === measurement ? 'selected' : ''}`}
-                onClick={() => setLiquidMeasurement(measurement)}
-              >
-                <p>{measurement}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
-      {alcoholType === 'Spirits' && (
+    <section className="calculator-panel" aria-labelledby="calculator-title">
+      <header className="calculator-header">
         <div>
-          <label>Select Proof:</label>
+          <p className="eyebrow">State: Massachusetts</p>
+          <h1 id="calculator-title">Alcohol Tax Calculator</h1>
+        </div>
+      </header>
+
+      <form className="calculator-form" onSubmit={handleSubmit}>
+        <fieldset className="choice-group">
+          <legend>Select Alcohol Type</legend>
           <div className="widget-container">
-            {proofOptions.map((option, index) => (
-              <div
+            {alcoholTypes.map((type, index) => (
+              <button
+                type="button"
                 key={index}
-                className={`widget ${proof === option ? 'selected' : ''}`}
-                onClick={() => setProof(option)}
+                className={`widget ${alcoholType === type ? 'selected' : ''}`}
+                aria-pressed={alcoholType === type}
+                onClick={() => handleAlcoholTypeChange(type)}
               >
-                <p>{option}</p>
-              </div>
+                {type}
+              </button>
             ))}
           </div>
-        </div>
-      )}
+        </fieldset>
 
-      <form onSubmit={handleSubmit}>
-        <button type="submit" disabled={!alcoholType || !liquidMeasurement || (alcoholType === 'Spirits' && !proof)}>
+        <fieldset className="choice-group">
+          <legend>Select Liquid Measurement</legend>
+          <div className="widget-container">
+            {availableMeasurements.map((measurement, index) => (
+              <button
+                type="button"
+                key={index}
+                className={`widget ${liquidMeasurement === measurement ? 'selected' : ''}`}
+                aria-pressed={liquidMeasurement === measurement}
+                onClick={() => handleMeasurementChange(measurement)}
+              >
+                {measurement}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+
+        {alcoholType === 'Spirits' && (
+          <fieldset className="choice-group">
+            <legend>Select Proof</legend>
+            <div className="widget-container compact">
+              {proofOptions.map((option, index) => (
+                <button
+                  type="button"
+                  key={index}
+                  className={`widget ${proof === option ? 'selected' : ''}`}
+                  aria-pressed={proof === option}
+                  onClick={() => handleProofChange(option)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        )}
+
+        <button className="calculate-button" type="submit" disabled={!alcoholType || !liquidMeasurement || (alcoholType === 'Spirits' && !proof)}>
           Calculate Tax
         </button>
       </form>
 
       {taxPaid !== null && (
-        <div>
-          <h2>Tax Paid: ${taxPaid}</h2>
+        <div className="result-panel" aria-live="polite">
+          <p className="result-label">Tax Paid</p>
+          <p className="result-value">${taxPaid}</p>
+          <p className="result-details">
+            {alcoholType} - {liquidMeasurement}
+            {alcoholType === 'Spirits' ? ` - ${proof} proof` : ''}
+          </p>
         </div>
       )}
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </div>
+      {error && <p className="form-error" role="alert">{error}</p>}
+    </section>
   );
 };
 

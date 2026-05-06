@@ -1,122 +1,79 @@
-// src/__tests__/AlcoholTaxCalculator.test.js
-
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import AlcoholTaxCalculator from '../AlcoholTaxCalculator';
 import { calculateTax } from '../taxCalculator';
 
-// Mock the calculateTax function
 vi.mock('../taxCalculator', () => ({
   calculateTax: vi.fn(),
 }));
+
+const defaultProps = {
+  alcoholTypes: ['Malt', 'Wine', 'Beer', 'Spirits'],
+  allLiquidMeasurements: ['12 Ounces', 'Pint', 'Case'],
+  specificLiquidMeasurements: ['250ml', '750ml', '1L', '1.75L'],
+  proofOptions: [80, 90, 100, 120]
+};
+
 describe('AlcoholTaxCalculator - Button State', () => {
-  const alcoholTypes = ['Malt', 'Wine', 'Beer', 'Spirits'];
-  const allLiquidMeasurements = ['12 Ounces', 'Pint', 'Case'];
-  const specificLiquidMeasurements = ['250ml', '750ml', '1L', '1.75L'];
-  const proofOptions = [80, 90, 100, 120];
+  beforeEach(() => {
+    calculateTax.mockClear();
+  });
 
   test('should render the button as disabled initially', () => {
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={alcoholTypes}
-        allLiquidMeasurements={allLiquidMeasurements}
-        specificLiquidMeasurements={specificLiquidMeasurements}
-        proofOptions={proofOptions}
-      />
-    );
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    const button = screen.getByText('Calculate Tax');
-    expect(button).toBeDisabled(); // Button should be disabled initially
+    const button = screen.getByRole('button', { name: 'Calculate Tax' });
+    expect(button).toBeDisabled();
   });
 
   test('should enable the button when alcohol type and liquid measurement are selected', () => {
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={alcoholTypes}
-        allLiquidMeasurements={allLiquidMeasurements}
-        specificLiquidMeasurements={specificLiquidMeasurements}
-        proofOptions={proofOptions}
-      />
-    );
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    // Select alcohol type and liquid measurement
-    fireEvent.click(screen.getByText('Malt'));  // Select alcohol type
-    fireEvent.click(screen.getByText('12 Ounces'));  // Select liquid measurement
+    fireEvent.click(screen.getByRole('button', { name: 'Malt' }));
+    fireEvent.click(screen.getByRole('button', { name: '12 Ounces' }));
 
-    const button = screen.getByText('Calculate Tax');
-    expect(button).toBeEnabled(); // Button should be enabled
+    const button = screen.getByRole('button', { name: 'Calculate Tax' });
+    expect(button).toBeEnabled();
   });
 
   test('should enable the button when alcohol type is Spirits, liquid measurement is selected, and proof is selected', () => {
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={alcoholTypes}
-        allLiquidMeasurements={allLiquidMeasurements}
-        specificLiquidMeasurements={specificLiquidMeasurements}
-        proofOptions={proofOptions}
-      />
-    );
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    // Select alcohol type, liquid measurement, and proof
-    fireEvent.click(screen.getByText('Spirits'));  // Select alcohol type
-    fireEvent.click(screen.getByText('750ml'));  // Select liquid measurement
-    fireEvent.click(screen.getByText('100'));    // Select proof
+    fireEvent.click(screen.getByRole('button', { name: 'Spirits' }));
+    fireEvent.click(screen.getByRole('button', { name: '750ml' }));
+    fireEvent.click(screen.getByRole('button', { name: '100' }));
 
-    const button = screen.getByText('Calculate Tax');
-    expect(button).toBeEnabled(); // Button should be enabled
+    const button = screen.getByRole('button', { name: 'Calculate Tax' });
+    expect(button).toBeEnabled();
   });
 
   test('should keep the button disabled if proof is not selected when alcohol type is Spirits', () => {
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={alcoholTypes}
-        allLiquidMeasurements={allLiquidMeasurements}
-        specificLiquidMeasurements={specificLiquidMeasurements}
-        proofOptions={proofOptions}
-      />
-    );
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    // Select alcohol type and liquid measurement but not proof
-    fireEvent.click(screen.getByText('Spirits'));  // Select alcohol type
-    fireEvent.click(screen.getByText('750ml'));  // Select liquid measurement
+    fireEvent.click(screen.getByRole('button', { name: 'Spirits' }));
+    fireEvent.click(screen.getByRole('button', { name: '750ml' }));
 
-    const button = screen.getByText('Calculate Tax');
-    expect(button).toBeDisabled(); // Button should still be disabled without proof
+    const button = screen.getByRole('button', { name: 'Calculate Tax' });
+    expect(button).toBeDisabled();
   });
 
   test('should keep the button disabled if liquid measurement is not selected', () => {
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={alcoholTypes}
-        allLiquidMeasurements={allLiquidMeasurements}
-        specificLiquidMeasurements={specificLiquidMeasurements}
-        proofOptions={proofOptions}
-      />
-    );
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    // Select alcohol type but not liquid measurement
-    fireEvent.click(screen.getByText('Spirits'));  // Select alcohol type
+    fireEvent.click(screen.getByRole('button', { name: 'Spirits' }));
 
-    const button = screen.getByText('Calculate Tax');
-    expect(button).toBeDisabled(); // Button should be disabled without liquid measurement
+    const button = screen.getByRole('button', { name: 'Calculate Tax' });
+    expect(button).toBeDisabled();
   });
 
   test('should keep the button disabled if alcohol type is not selected', () => {
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={alcoholTypes}
-        allLiquidMeasurements={allLiquidMeasurements}
-        specificLiquidMeasurements={specificLiquidMeasurements}
-        proofOptions={proofOptions}
-      />
-    );
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    // Select liquid measurement but not alcohol type
-    fireEvent.click(screen.getByText('12 Ounces'));  // Select liquid measurement
+    fireEvent.click(screen.getByRole('button', { name: '12 Ounces' }));
 
-    const button = screen.getByText('Calculate Tax');
-    expect(button).toBeDisabled(); // Button should be disabled without alcohol type
+    const button = screen.getByRole('button', { name: 'Calculate Tax' });
+    expect(button).toBeDisabled();
   });
 
 });
@@ -127,14 +84,7 @@ describe('AlcoholTaxCalculator', () => {
   });
 
   test('renders without crashing', () => {
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={['Malt', 'Wine', 'Beer', 'Spirits']}
-        allLiquidMeasurements={['12 Ounces', 'Pint', 'Case']}
-        specificLiquidMeasurements={['250ml', '750ml']}
-        proofOptions={[80, 90, 100, 120]}
-      />
-    );
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
     expect(screen.getByText('State: Massachusetts')).toBeInTheDocument();
   });
@@ -142,39 +92,48 @@ describe('AlcoholTaxCalculator', () => {
   test('calculates tax correctly for Spirits with proof', () => {
     calculateTax.mockReturnValue('50.00');
 
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={['Malt', 'Wine', 'Beer', 'Spirits']}
-        allLiquidMeasurements={['12 Ounces', 'Pint', 'Case']}
-        specificLiquidMeasurements={['250ml', '750ml']}
-        proofOptions={[80, 90, 100, 120]}
-      />
-    );
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    fireEvent.click(screen.getByText('Spirits'));  // Select alcohol type
-    fireEvent.click(screen.getByText('750ml'));  // Select liquid measurement
-    fireEvent.click(screen.getByText('100'));    // Select proof
+    fireEvent.click(screen.getByRole('button', { name: 'Spirits' }));
+    fireEvent.click(screen.getByRole('button', { name: '750ml' }));
+    fireEvent.click(screen.getByRole('button', { name: '100' }));
 
-    fireEvent.click(screen.getByText('Calculate Tax')); // Submit form
+    fireEvent.click(screen.getByRole('button', { name: 'Calculate Tax' }));
 
     expect(calculateTax).toHaveBeenCalledWith('MA', 'Spirits', '750ml', 100);
-    expect(screen.getByText('Tax Paid: $50.00')).toBeInTheDocument();
+    expect(screen.getByText('$50.00')).toBeInTheDocument();
+    expect(screen.getByText('Spirits - 750ml - 100 proof')).toBeInTheDocument();
   });
 
-  test('shows error when required fields are not selected', () => {
-    render(
-      <AlcoholTaxCalculator 
-        alcoholTypes={['Malt', 'Wine', 'Beer', 'Spirits']}
-        allLiquidMeasurements={['12 Ounces', 'Pint', 'Case']}
-        specificLiquidMeasurements={['250ml', '750ml']}
-        proofOptions={[80, 90, 100, 120]}
-      />
-    );
+  test('clears the displayed tax when a selected input changes', () => {
+    calculateTax.mockReturnValue('0.01');
 
-    fireEvent.click(screen.getByText('Spirits'));  // Select alcohol type
+    render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    fireEvent.click(screen.getByText('Calculate Tax')); // Submit form
+    fireEvent.click(screen.getByRole('button', { name: 'Malt' }));
+    fireEvent.click(screen.getByRole('button', { name: '12 Ounces' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Calculate Tax' }));
 
-    expect(screen.getByText('Select Alcohol Type:')).toBeInTheDocument();
+    expect(screen.getByText('$0.01')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Pint' }));
+
+    expect(screen.queryByText('$0.01')).not.toBeInTheDocument();
+  });
+
+  test('resets measurement and proof when alcohol type changes', () => {
+    render(<AlcoholTaxCalculator {...defaultProps} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Spirits' }));
+    fireEvent.click(screen.getByRole('button', { name: '750ml' }));
+    fireEvent.click(screen.getByRole('button', { name: '100' }));
+
+    expect(screen.getByRole('button', { name: 'Calculate Tax' })).toBeEnabled();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Malt' }));
+
+    expect(screen.getByRole('button', { name: 'Calculate Tax' })).toBeDisabled();
+    expect(screen.queryByRole('button', { name: '100' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '12 Ounces' })).toHaveAttribute('aria-pressed', 'false');
   });
 });
