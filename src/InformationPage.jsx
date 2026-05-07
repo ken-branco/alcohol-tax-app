@@ -32,7 +32,7 @@ const InformationPage = () => (
         <br></br>Case of Budwesier: <span className="highlight">$2.48</span>
         <br></br>
 
-        That is a <span className="highlight">2155%</span> difference in pass-through tax!  
+        The beer buyer pays about <span className="highlight">22.5x more</span> in pass-through alcohol tax than the wine buyer.  
 
       </p>
     </section>

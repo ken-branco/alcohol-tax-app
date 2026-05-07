@@ -12,6 +12,8 @@ button {
 }
 
 .app-shell {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   padding: 24px;
 }
@@ -19,6 +21,7 @@ button {
 .page {
   width: min(100%, 920px);
   margin: 0 auto;
+  flex: 1;
 }
 
 .page-calculator {
@@ -187,6 +190,15 @@ h1 {
   margin: 16px 0 0;
   color: #b42318;
   font-weight: 700;
+}
+
+.site-footer {
+  width: min(100%, 920px);
+  margin: 32px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid #d4dfef;
+  color: #64748b;
+  text-align: center;
 }
 
 @media (max-width: 600px) {

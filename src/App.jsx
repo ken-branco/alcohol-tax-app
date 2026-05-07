@@ -31,6 +31,10 @@ const App = () => {
 
         {showPage === 'feedback' && <FeedbackPage />}
       </main>
+
+      <footer className="site-footer">
+        <small>Copyright &copy; 2026 Ken Branco. All rights reserved.</small>
+      </footer>
     </div>
   );
 };
