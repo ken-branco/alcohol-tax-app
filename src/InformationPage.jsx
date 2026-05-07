@@ -29,10 +29,10 @@ const InformationPage = () => (
         the pass-through tax paid at the Point of Sale for a $100 750ml bottle of Wine versus a case of Budwesier (24 12-ounce cans). <br></br><br></br>
         Taxes Paid on:
         <br></br>$100 750ml bottle of Wine: <span className="highlight">$0.11</span>
-        <br></br>Case of Budwesier: <span className="highlight">$2.48</span>
+        <br></br>Case of Budwesier: <span className="highlight">$0.24</span>
         <br></br>
 
-        The beer buyer pays about <span className="highlight">22.5x more</span> in pass-through alcohol tax than the wine buyer.  
+        The beer buyer pays about <span className="highlight">2.2x more</span> in pass-through alcohol tax than the wine buyer.  
 
       </p>
     </section>

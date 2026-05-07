@@ -37,7 +37,7 @@ describe('PageToggle', () => {
 
   test('should render Tax Calculator Page when toggled', () => {
     render(<AlcoholTaxCalculator 
-      alcoholTypes={['Malt', 'Wine', 'Sparkling', 'Beer', 'Spirits', 'Cider']}
+      alcoholTypes={['Malt/Beer', 'Wine', 'Sparkling', 'Spirits', 'Cider']}
       allLiquidMeasurements={['12 Ounces', 'Pint', 'Case']}
       specificLiquidMeasurements={['250ml', '750ml', '1l', '1_75l']}
       proofOptions={[80, 90, 100, 120]} 

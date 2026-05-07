@@ -2,10 +2,9 @@
 
 const taxRates = {
   MA: {
-    'Malt': { rate: 0.10645, perUnit: 'gallon' },
+    'Malt/Beer': { rate: 3.30 / 31, perUnit: 'gallon' },
     'Wine': { rate: 0.55, perUnit: 'gallon' },
     'Sparkling': { rate: 0.70, perUnit: 'gallon' },
-    'Beer': { rate: 1.10, perUnit: 'gallon' },
     'Spirits': { rate: 4.05, perUnit: 'gallon' },
     'Cider': { rate: 0.03, perUnit: 'gallon' }
   }
@@ -43,20 +42,15 @@ export const calculateTax = (state, alcoholType, liquidMeasurement, proof = null
     throw new Error('Invalid liquid measurement');
   }
 
-  // Special logic for Spirits with a Proof value
   if (alcoholType === 'Spirits') {
-    
-    if (proof > 100) {
-      // Calculate using Proof Gallons method
-      const proofGallonValue = proof / 100;
-      const fractionalUSGallonValue = factor; // Already in gallons
-      const fractionalProofGallonValue = fractionalUSGallonValue * proofGallonValue;
-      const tax = fractionalProofGallonValue * alcoholRate.rate;
-      return tax.toFixed(2);
+    if (!proof) {
+      throw new Error('Proof is required for spirits');
     }
+
+    const tax = alcoholRate.rate * factor * (proof / 100);
+    return tax.toFixed(2);
   }
 
-  // General calculation for proof between 31 and 100 or other alcohol types
   const tax = alcoholRate.rate * factor;
   return tax.toFixed(2);
 };

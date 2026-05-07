@@ -8,7 +8,7 @@ import FeedbackPage from './FeedbackPage';
 const App = () => {
   const [showPage, setShowPage] = useState('calculator');
 
-  const alcoholTypes = ['Malt', 'Wine', 'Sparkling', 'Beer', 'Spirits', 'Cider'];
+  const alcoholTypes = ['Malt/Beer', 'Wine', 'Sparkling', 'Spirits', 'Cider'];
   const allLiquidMeasurements = ['12 Ounces', 'Pint', '6-Pack', '12-Pack', 'Case', '250ml', '750ml', '1L', '1.75L'];
   const specificLiquidMeasurements = ['250ml', '750ml', '1L', '1.75L'];
   const proofOptions = [80, 90, 100, 120];

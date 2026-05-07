@@ -9,7 +9,7 @@ vi.mock('../taxCalculator', () => ({
 }));
 
 const defaultProps = {
-  alcoholTypes: ['Malt', 'Wine', 'Beer', 'Spirits'],
+  alcoholTypes: ['Malt/Beer', 'Wine', 'Spirits'],
   allLiquidMeasurements: ['12 Ounces', 'Pint', 'Case'],
   specificLiquidMeasurements: ['250ml', '750ml', '1L', '1.75L'],
   proofOptions: [80, 90, 100, 120]
@@ -32,9 +32,9 @@ describe('AlcoholTaxCalculator', () => {
   test('updates guidance after alcohol type is selected', () => {
     render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Malt' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Malt/Beer' }));
 
-    expect(screen.getByText('Select a liquid measurement for Malt.')).toBeInTheDocument();
+    expect(screen.getByText('Select a liquid measurement for Malt/Beer.')).toBeInTheDocument();
     expect(calculateTax).not.toHaveBeenCalled();
   });
 
@@ -43,13 +43,13 @@ describe('AlcoholTaxCalculator', () => {
 
     render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Malt' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Malt/Beer' }));
     fireEvent.click(screen.getByRole('button', { name: '12 Ounces' }));
 
-    expect(calculateTax).toHaveBeenCalledWith('MA', 'Malt', '12 Ounces', '');
+    expect(calculateTax).toHaveBeenCalledWith('MA', 'Malt/Beer', '12 Ounces', '');
     expect(screen.getByText('Tax calculated from your selections.')).toBeInTheDocument();
     expect(screen.getByText('$0.01')).toBeInTheDocument();
-    expect(screen.getByText('Malt - 12 Ounces')).toBeInTheDocument();
+    expect(screen.getByText('Malt/Beer - 12 Ounces')).toBeInTheDocument();
   });
 
   test('requires proof before automatically calculating spirits tax', () => {
@@ -76,14 +76,14 @@ describe('AlcoholTaxCalculator', () => {
 
     render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Malt' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Malt/Beer' }));
     fireEvent.click(screen.getByRole('button', { name: '12 Ounces' }));
 
     expect(screen.getByText('$0.01')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: 'Pint' }));
 
-    expect(calculateTax).toHaveBeenLastCalledWith('MA', 'Malt', 'Pint', '');
+    expect(calculateTax).toHaveBeenLastCalledWith('MA', 'Malt/Beer', 'Pint', '');
     expect(screen.queryByText('$0.01')).not.toBeInTheDocument();
     expect(screen.getByText('$0.02')).toBeInTheDocument();
   });
@@ -99,9 +99,9 @@ describe('AlcoholTaxCalculator', () => {
 
     expect(screen.getByText('$50.00')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: 'Malt' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Malt/Beer' }));
 
-    expect(screen.getByText('Select a liquid measurement for Malt.')).toBeInTheDocument();
+    expect(screen.getByText('Select a liquid measurement for Malt/Beer.')).toBeInTheDocument();
     expect(screen.queryByText('$50.00')).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '100' })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: '12 Ounces' })).toHaveAttribute('aria-pressed', 'false');
@@ -114,7 +114,7 @@ describe('AlcoholTaxCalculator', () => {
 
     render(<AlcoholTaxCalculator {...defaultProps} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Malt' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Malt/Beer' }));
     fireEvent.click(screen.getByRole('button', { name: '12 Ounces' }));
 
     expect(screen.getByRole('alert')).toHaveTextContent('Invalid liquid measurement');
