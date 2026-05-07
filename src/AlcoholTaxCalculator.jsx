@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { calculateTax } from './taxCalculator';
 
 const bottleOnlyTypes = ['Spirits', 'Wine', 'Sparkling'];
@@ -7,50 +7,56 @@ const AlcoholTaxCalculator = ({ alcoholTypes, allLiquidMeasurements, specificLiq
   const [alcoholType, setAlcoholType] = useState('');
   const [liquidMeasurement, setLiquidMeasurement] = useState('');
   const [proof, setProof] = useState('');
-  const [taxPaid, setTaxPaid] = useState(null);
-  const [error, setError] = useState('');
 
   const availableMeasurements = bottleOnlyTypes.includes(alcoholType)
     ? specificLiquidMeasurements
     : allLiquidMeasurements.filter((measurement) => !specificLiquidMeasurements.includes(measurement));
 
-  const clearOutcome = () => {
-    setTaxPaid(null);
-    setError('');
-  };
+  const isReadyToCalculate = Boolean(alcoholType && liquidMeasurement && (alcoholType !== 'Spirits' || proof));
+
+  const guidance = (() => {
+    if (!alcoholType) {
+      return 'Select an alcohol type to begin.';
+    }
+
+    if (!liquidMeasurement) {
+      return `Select a liquid measurement for ${alcoholType}.`;
+    }
+
+    if (alcoholType === 'Spirits' && !proof) {
+      return 'Select a proof to calculate the spirits tax.';
+    }
+
+    return 'Tax calculated from your selections.';
+  })();
+
+  const taxResult = useMemo(() => {
+    if (!isReadyToCalculate) {
+      return { taxPaid: null, error: '' };
+    }
+
+    try {
+      return {
+        taxPaid: calculateTax('MA', alcoholType, liquidMeasurement, proof),
+        error: ''
+      };
+    } catch (err) {
+      return { taxPaid: null, error: err.message };
+    }
+  }, [alcoholType, isReadyToCalculate, liquidMeasurement, proof]);
 
   const handleAlcoholTypeChange = (type) => {
     setAlcoholType(type);
     setLiquidMeasurement('');
     setProof('');
-    clearOutcome();
   };
 
   const handleMeasurementChange = (measurement) => {
     setLiquidMeasurement(measurement);
-    clearOutcome();
   };
 
   const handleProofChange = (option) => {
     setProof(option);
-    clearOutcome();
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!alcoholType || !liquidMeasurement || (alcoholType === 'Spirits' && !proof)) {
-      setError('Please select alcohol type, liquid measurement, and proof (if applicable).');
-      return;
-    }
-
-    try {
-      const calculatedTax = calculateTax('MA', alcoholType, liquidMeasurement, proof);
-      setTaxPaid(calculatedTax);
-      setError('');
-    } catch (err) {
-      setError(err.message);
-      setTaxPaid(null);
-    }
   };
 
   return (
@@ -62,7 +68,11 @@ const AlcoholTaxCalculator = ({ alcoholTypes, allLiquidMeasurements, specificLiq
         </div>
       </header>
 
-      <form className="calculator-form" onSubmit={handleSubmit}>
+      <div className="selection-status" aria-live="polite">
+        {guidance}
+      </div>
+
+      <div className="calculator-form">
         <fieldset className="choice-group">
           <legend>Select Alcohol Type</legend>
           <div className="widget-container">
@@ -115,16 +125,12 @@ const AlcoholTaxCalculator = ({ alcoholTypes, allLiquidMeasurements, specificLiq
             </div>
           </fieldset>
         )}
+      </div>
 
-        <button className="calculate-button" type="submit" disabled={!alcoholType || !liquidMeasurement || (alcoholType === 'Spirits' && !proof)}>
-          Calculate Tax
-        </button>
-      </form>
-
-      {taxPaid !== null && (
+      {taxResult.taxPaid !== null && (
         <div className="result-panel" aria-live="polite">
           <p className="result-label">Tax Paid</p>
-          <p className="result-value">${taxPaid}</p>
+          <p className="result-value">${taxResult.taxPaid}</p>
           <p className="result-details">
             {alcoholType} - {liquidMeasurement}
             {alcoholType === 'Spirits' ? ` - ${proof} proof` : ''}
@@ -132,7 +138,7 @@ const AlcoholTaxCalculator = ({ alcoholTypes, allLiquidMeasurements, specificLiq
         </div>
       )}
 
-      {error && <p className="form-error" role="alert">{error}</p>}
+      {taxResult.error && <p className="form-error" role="alert">{taxResult.error}</p>}
     </section>
   );
 };
